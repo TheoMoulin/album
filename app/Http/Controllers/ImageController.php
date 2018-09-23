@@ -176,6 +176,20 @@ class ImageController extends Controller
     }
 
     /**
+     * Display a listing of the images for the specified category.
+     *
+     * @param  string $slug
+     * @return \Illuminate\Http\Response
+     */
+    public function typeimage($slug)
+    {
+        $typeimage = $this->typeimageRepository->getBySlug ($slug);
+        $images = $this->imageRepository->getImagesForTypeImage ($slug);
+
+        return view ('home', compact ('typeimage', 'images'));
+    }
+
+    /**
      * Display a listing of the images for the specified album.
      *
      * @param  string $slug

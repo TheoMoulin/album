@@ -2,9 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\TypeImage;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
-use App\Repositories\ { CategoryRepository, AlbumRepository };
+use App\Repositories\{CategoryRepository, AlbumRepository, TypeImageRepository};
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -30,6 +31,8 @@ class AppServiceProvider extends ServiceProvider
         if (request ()->server ("SCRIPT_NAME") !== 'artisan') {
 
             view ()->share ('categories', resolve(CategoryRepository::class)->getAll());
+
+            view ()->share ('typeimages', resolve(TypeImageRepository::class)->getAll());
 
             view ()->composer('layouts.app', function ($view)
             {

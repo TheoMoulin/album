@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use MongoDB\BSON\Type;
 
 class Image extends Model
 {
@@ -12,6 +13,14 @@ class Image extends Model
     public function category()
     {
         return $this->belongsTo (Category::class);
+    }
+
+    /**
+     * Get the category that owns the image.
+     */
+    public function typeimage()
+    {
+        return $this->belongsTo (TypeImage::class);
     }
 
     /**

@@ -50,6 +50,21 @@
                     @endforeach
                 </div>
             </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle
+                    @isset($typeimage)
+                {{ currentRoute(route('typeimage', $typeimage->slug)) }}
+                @endisset
+                    " href="#" id="navbarDropdownCat" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Type d'image
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownCat">
+                    @foreach($typeimages as $typeimage)
+                        <a class="dropdown-item"
+                           href="{{ route('typeimage', $typeimage->slug) }}">{{ $typeimage->name }}</a>
+                    @endforeach
+                </div>
+            </li>
             @isset($albums)
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle
@@ -73,6 +88,9 @@
                                         route('category.create'), 
                                         route('category.index'),
                                         route('category.edit', request()->category?: 0),
+                                        route('typeimage.create'),
+                                        route('typeimage.index'),
+                                        route('typeimage.edit', request()->typeimage?: 0),
                                         route('orphans.index'),
                                         route('maintenance.index'),
                                         route('user.index')
@@ -86,6 +104,12 @@
                     </a>
                     <a class="dropdown-item" href="{{ route('category.index') }}">
                         <i class="fas fa-wrench fa-lg"></i> @lang('Gérer les catégories')
+                    </a>
+                    <a class="dropdown-item" href="{{ route('typeimage.create') }}">
+                        <i class="fas fa-plus fa-lg"></i> @lang("Ajouter un type d'image")
+                    </a>
+                    <a class="dropdown-item" href="{{ route('typeimage.index') }}">
+                        <i class="fas fa-wrench fa-lg"></i> @lang("Gérer les types d'images")
                     </a>
                     <a class="dropdown-item" href="{{ route('orphans.index') }}">
                         <i class="fas fa-images fa-lg"></i> @lang('Photos orphelines')

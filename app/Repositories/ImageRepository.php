@@ -71,6 +71,21 @@ class ImageRepository
     }
 
     /**
+     * Get images for typeimage.
+     *
+     * @param  string $slug
+     * @return \Illuminate\Pagination\LengthAwarePaginator
+     */
+    public function getImagesForTypeImage($slug)
+    {
+        $query = Image::latestWithUser ()->whereHas ('typeimage', function ($query) use ($slug) {
+            $query->whereSlug ($slug);
+        });
+
+        return $this->paginateAndRate ($query);
+    }
+
+    /**
      * Set rating values for images.
      *
      * @param  \Illuminate\Pagination\LengthAwarePaginator

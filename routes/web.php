@@ -10,6 +10,10 @@ Route::middleware ('admin')->group (function () {
         'except' => 'show'
     ]);
 
+    Route::resource ('typeimage', 'TypeImageController', [
+        'except' => 'show'
+    ]);
+
     Route::resource ('user', 'UserController', [
         'only' => ['index', 'edit', 'update', 'destroy']
     ]);
@@ -31,7 +35,10 @@ Route::middleware ('auth', 'verified')->group (function () {
         'only' => ['create', 'store', 'destroy', 'update']
     ]);
 
-    Route::resource ('profile', 'ProfileController', [
+    Route::resource ('image', 'ImageController');
+
+
+        Route::resource ('profile', 'ProfileController', [
         'only' => ['edit', 'update', 'destroy', 'show'],
         'parameters' => ['profile' => 'user']
     ]);
@@ -58,6 +65,7 @@ Route::middleware ('auth', 'verified')->group (function () {
 
 Route::name ('album')->get ('album/{slug}', 'ImageController@album');
 Route::name ('category')->get ('category/{slug}', 'ImageController@category');
+Route::name ('typeimage')->get ('typeimage/{slug}', 'ImageController@typeimage');
 Route::name ('user')->get ('user/{user}', 'ImageController@user');
 Route::name ('language')->get ('language/{lang}', 'HomeController@language');
 Route::middleware('ajax')->name('image.click')->patch('image/{image}/click', 'ImageController@click');
