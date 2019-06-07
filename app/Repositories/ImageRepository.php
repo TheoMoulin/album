@@ -26,6 +26,7 @@ class ImageRepository
         // Save in base
         $image = new Image;
         $image->description = $request->description;
+        $image->typeimage_id = $request->typeimage_id;
         $image->category_id = $request->category_id;
         $image->adult = isset($request->adult);
         $image->name = $path;

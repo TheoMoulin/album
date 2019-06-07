@@ -98,6 +98,13 @@
                                            title="@lang('Changer de catégorie')">
                                            <i class="fa fa-edit"></i>
                                         </a>
+                                        <a class="typeimage-edit"
+                                           data-id="{{ $image->typeimage_id }}"
+                                           href="{{ route('image.update', $image->id) }}"
+                                           data-toggle="tooltip"
+                                           title="@lang("Changer de type d'image")">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
                                         <a class="adult-edit"
                                            href="{{ route('image.adult', $image->id) }}"
                                            data-toggle="tooltip"
@@ -138,6 +145,34 @@
                         <div class="form-group">
                             <select class="form-control" name="category_id">
                                 @foreach($categories as $cat)
+                                    <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">@lang('Envoyer')</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="changeType" tabindex="-1" role="dialog" aria-labelledby="typeLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="typeLabel">@lang("Changement du type d'image")</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editForm" action="" method="POST">
+                        @method('PUT')
+                        @csrf
+                        <div class="form-group">
+                            <select class="form-control" name="type_id">
+                                @foreach($typeimages as $cat)
                                     <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                                 @endforeach
                             </select>
@@ -334,6 +369,14 @@
                 $('select').val(that.attr('data-id'))
                 $('#editForm').attr('action', that.attr('href'))
                 $('#changeCategory').modal('show')
+            })
+
+            $('a.typeimage-edit').click((e) => {
+                e.preventDefault()
+                let that = $(e.currentTarget)
+                $('select').val(that.attr('data-id'))
+                $('#editForm').attr('action', that.attr('href'))
+                $('#changeType').modal('show')
             })
 
             $('a.adult-edit').click((e) => {

@@ -7,7 +7,7 @@ use App\Models\ {
     User, Image
 };
 use App\Repositories\ {
-    ImageRepository, NotificationRepository, AlbumRepository, CategoryRepository
+    ImageRepository, NotificationRepository, AlbumRepository,CategoryRepository,TypeImageRepository
 };
 use App\Notifications\ImageRated;
 
@@ -44,11 +44,13 @@ class ImageController extends Controller
     public function __construct(
         ImageRepository $imageRepository,
         AlbumRepository $albumRepository,
+        TypeImageRepository $typeImageRepository,
         CategoryRepository $categoryRepository)
     {
         $this->imageRepository = $imageRepository;
         $this->albumRepository = $albumRepository;
         $this->categoryRepository = $categoryRepository;
+        $this->typeImageRepository = $typeImageRepository;
     }
 
     /**
@@ -153,6 +155,7 @@ class ImageController extends Controller
         $request->validate ([
             'image' => 'required|image|max:2000',
             'category_id' => 'required|exists:categories,id',
+            "typeimage_id" => "required|exists:type_images,id",
             'description' => 'nullable|string|max:255',
         ]);
 
@@ -183,7 +186,7 @@ class ImageController extends Controller
      */
     public function typeimage($slug)
     {
-        $typeimage = $this->typeimageRepository->getBySlug ($slug);
+        $typeimage = $this->typeImageRepository->getBySlug ($slug);
         $images = $this->imageRepository->getImagesForTypeImage ($slug);
 
         return view ('home', compact ('typeimage', 'images'));
@@ -243,9 +246,10 @@ class ImageController extends Controller
         $this->authorize('manage', $image);
 
         $image->category_id = $request->category_id;
+        $image->typeimage_id = $request->typeimage_id;
         $image->save();
 
-        return back()->with('updated', __('La catégorie a bien été changée !'));
+        return back()->with('updated', __('Les modification ont bien été effectuées !'));
     }
 
     /**

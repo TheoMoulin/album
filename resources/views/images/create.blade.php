@@ -38,6 +38,15 @@
                 </select>
             </div>
 
+            <div class="form-group">
+                <label for="typeimage_id">@lang("Type d'image")</label>
+                <select id="typeimage_id" name="typeimage_id" class="form-control">
+                    @foreach($typeimages as $typeimage)
+                        <option value="{{ $typeimage->id }}">{{ $typeimage->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
             @include('partials.form-group', [
                 'title' => __('Description (optionnelle)'),
                 'type' => 'text',
