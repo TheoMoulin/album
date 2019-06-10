@@ -34,6 +34,7 @@ Route::middleware ('auth', 'verified')->group (function () {
     Route::resource ('image', 'ImageController', [
         'only' => ['create', 'store', 'destroy', 'update']
     ]);
+    Route::match(['put', 'patch'],'image/type/{image}', 'ImageController@typeUpdate')->name('image.typeUpdate');
 
     Route::resource ('image', 'ImageController');
 

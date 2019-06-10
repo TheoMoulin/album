@@ -17,6 +17,9 @@
         @isset($category)
             <h2 class="text-title mb-3">{{ $category->name }}</h2>
         @endif
+        @isset($typeimage)
+            <h2 class="text-title mb-3">{{ $typeimage->name }}</h2>
+        @endif
         @isset($user)
             <h2 class="text-title mb-3">{{ __('Photos de ') . $user->name }}</h2>
         @endif
@@ -100,7 +103,7 @@
                                         </a>
                                         <a class="typeimage-edit"
                                            data-id="{{ $image->typeimage_id }}"
-                                           href="{{ route('image.update', $image->id) }}"
+                                           href="{{ route('image.typeUpdate', $image->id) }}"
                                            data-toggle="tooltip"
                                            title="@lang("Changer de type d'image")">
                                             <i class="fa fa-edit"></i>
@@ -167,7 +170,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="editForm" action="" method="POST">
+                    <form id="typeForm" action="{{ route('image.typeUpdate', $image->id) }}" method="POST">
                         @method('PUT')
                         @csrf
                         <div class="form-group">
@@ -375,7 +378,7 @@
                 e.preventDefault()
                 let that = $(e.currentTarget)
                 $('select').val(that.attr('data-id'))
-                $('#editForm').attr('action', that.attr('href'))
+                $('#typeForm').attr('action', that.attr('href'))
                 $('#changeType').modal('show')
             })
 

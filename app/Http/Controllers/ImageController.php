@@ -240,18 +240,32 @@ class ImageController extends Controller
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\Image
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, Image $image)
     {
         $this->authorize('manage', $image);
 
         $image->category_id = $request->category_id;
-        $image->typeimage_id = $request->typeimage_id;
         $image->save();
 
         return back()->with('updated', __('Les modification ont bien été effectuées !'));
     }
 
+    /**
+     * @param Request $request
+     * @param Image $image
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function typeUpdate(Request $request, Image $image)
+    {
+        $this->authorize('manage', $image);
+        $image->typeimage_id = $request->type_id;
+        $image->save();
+
+        return back()->with('updated', __('Les modification ont bien été effectuées !'));
+    }
     /**
      * Rate the image.
      *
